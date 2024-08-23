@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: black;
+            font-style: italic;
+        }
+        .cart-item {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px; /* Adjusted padding */
+            width: 100%; /* Full width on small screens */
+            max-width: 300px; /* Max width for larger screens */
+        }
+        .cart-item-details {
+            margin-bottom: 10px;
+        }
+        .cart-item-details h4 {
+            text-align: center;
+            margin-top: 10px;
+            color: #333;
+            font-size: 18px; /* Adjusted font size */
+        }
+        .cart-item-remove {
+            background-color: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px; /* Adjusted padding */
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .cart-item-remove:hover {
+            background-color: #cc0000;
+        }
+        #cartItems {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Adjusted gap */
+            justify-content: center; /* Center items */
+        }
+        button.clear-cart {
+            background-color: #ff8800;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto; /* Center align */
+        }
+        button.clear-cart:hover {
+            background-color: #e67300;
+        }
+
+        /* Media Queries for Responsive Design */
+        @media (max-width: 768px) {
+            .cart-item {
+                padding: 15px; /* Less padding for smaller screens */
+            }
+            .cart-item-details h4 {
+                font-size: 16px; /* Smaller font size on tablets */
+            }
+            button.clear-cart {
+                padding: 8px 16px; /* Adjust button size on smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cart-item {
+                padding: 10px; /* Less padding on mobile */
+                width: 100%; /* Full width on mobile */
+            }
+            .cart-item-details h4 {
+                font-size: 14px; /* Smaller font size on mobile */
+            }
+            button.clear-cart {
+                padding: 8px 12px; /* Smaller button size on mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Cart</h1>
+    <div id="cartItems"></div>
+    <button class="clear-cart" onclick="clearCart()">Clear Cart</button>
+    <script>
+        function addToCart(name, price) {
+            price = parseFloat(price); // Ensure price is a number
+            if (isNaN(price)) {
+                console.error('Invalid price:', price);
+                return;
+            }
+
+            let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+            // Check if the item already exists in the cart
+            const existingItemIndex = cartItems.findIndex(item => item.name === name);
+
+            if (existingItemIndex > -1) {
+                // If it exists, update the quantity
+                cartItems[existingItemIndex].quantity += 1;
+            } else {
+                // If it doesn't exist, add the item to the cart
+                cartItems.push({ name, price, quantity: 1 });
+            }
+
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            alert(`${name} has been added to your cart.`);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            const cartItemsContainer = document.getElementById('cartItems');
+
+            if (cartItems.length === 0) {
+                cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+            } else {
+                cartItems.forEach(item => {
+                    const cartItemElement = document.createElement('div');
+                    cartItemElement.className = 'cart-item';
+
+                    cartItemElement.innerHTML = `
+                        <div class="cart-item-details">
+                            <h4>${item.name}</h4>
+                        </div>
+                        <button class="cart-item-remove" onclick="removeFromCart('${item.name}')">Remove</button>
+                    `;
+
+                    cartItemsContainer.appendChild(cartItemElement);
+                });
+            }
+        });
+
+        function removeFromCart(name) {
+            let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            cartItems = cartItems.filter(item => item.name !== name);
+
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+            // Reload the page to update the cart display
+            location.reload();
+        }
+
+        function clearCart() {
+            localStorage.removeItem('cartItems');
+            location.reload();
+        }
+    </script>
+</body>
+</html>
