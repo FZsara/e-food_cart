@@ -41,57 +41,38 @@ document.querySelectorAll('.item button').forEach(button => {
 
 document.addEventListener("DOMContentLoaded", function() 
 {
-    
-        const testimonials = [
-            {
-                name: "Willians Jhone",
-                title: "CEO & Co-Founder",
-                quote: "Deliciously healthy",
-                image: "fast-food-banner.png"
-            },
-            {
-                name: "Emily Doe",
-                title: "Marketing Head",
-                quote: "Top-Notch!!",
-                image: "fast-food-banner.png"
-            },
-            {
-                name: "John Smith",
-                title: "Product Manager",
-                quote: "Services Amazing",
-                image: "fast-food-banner.png"
-            },
-            {
-                name: "Jane Doe",
-                title: "Sales Manager",
-                quote: "Gonna back again!",
-                image: "fast-food-banner.png"
-            }
-        ];
-    
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const wrappers = document.querySelectorAll('.wrapper');
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
         let currentIndex = 0;
-    
-        const testimonialElement = document.getElementById("testimonial");
-        const prevBtn = document.querySelector(".prev-btn");
-        const nextBtn = document.querySelector(".next-btn");
-    
-        function updateTestimonial(index) {
-            const testimonial = testimonials[index];
-            testimonialElement.querySelector("h4").textContent = testimonial.name;
-            testimonialElement.querySelector("p").textContent = testimonial.title;
-            testimonialElement.querySelector("blockquote").textContent = testimonial.quote;
-            testimonialElement.querySelector(".testimonial-image img").src = testimonial.image;
+      
+        function updateSlider() {
+            const translateXValue = -currentIndex * 100;
+            wrappers.forEach((wrapper) => {
+                wrapper.style.transform = `translateX(${translateXValue}%)`;
+            });
         }
-    
-        prevBtn.addEventListener("click", () => {
-            currentIndex = (currentIndex === 0) ? testimonials.length - 1 : currentIndex - 1;
-            updateTestimonial(currentIndex);
+      
+        nextButton.addEventListener('click', () => {
+            if (currentIndex < wrappers.length - 1) {
+                currentIndex++;
+            } else {
+                currentIndex = 0; // Loop back to the first slide
+            }
+            updateSlider();
         });
-    
-        nextBtn.addEventListener("click", () => {
-            currentIndex = (currentIndex === testimonials.length - 1) ? 0 : currentIndex + 1;
-            updateTestimonial(currentIndex);
+      
+        prevButton.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+            } else {
+                currentIndex = wrappers.length - 1; // Loop to the last slide
+            }
+            updateSlider();
         });
+      });
     const subscribeBtn = document.getElementById("subscribe-btn");
     const subscribeMessage = document.getElementById("subscribe-message");
 
@@ -100,8 +81,6 @@ document.addEventListener("DOMContentLoaded", function()
         subscribeMessage.style.display = "block";
     });
 
-    // Initialize first testimonial
-    updateTestimonial(currentIndex);
 });
 
 document.querySelector('.footer-form').addEventListener('submit', function(e) {
