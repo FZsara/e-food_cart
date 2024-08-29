@@ -13,8 +13,9 @@
         </div>
         <nav class="nav">
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Cart</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="cart.html">Cart</a></li>
+
             </ul>
         </nav>
         <div class="search-cart">
@@ -24,11 +25,12 @@
                 </div>
                 <input type="text" placeholder="Search">
                 <div class="divider"></div>
-                <button class="cart-button">
-                    <img src="cart-icon.png">
-                    
+                <button class="cart-button" onclick="window.location.href='cart.html';">
+                    <img src="shopping-cart.png">
                 </button>
             </div>
+        </div>
+        
     </header>
 
     <section class="hero">
@@ -289,22 +291,26 @@
         <h3>Our Happy Client Says</h3>
         <div class="testimonial-container">
             <div class="testimonial" id="testimonial">
+                <button class="prev-btn">&#8249;</button>
                 <div class="testimonial-content">
-                    <button class="prev-btn">&#8249;</button>
+                    <div class="person-image">
+                        <img src="person-placeholder.jpg" alt="Person Image">
+                    </div>
                     <div class="testimonial-text">
                         <h4></h4>
                         <p></p>
                         <blockquote></blockquote>
                     </div>
-                    <button class="next-btn">&#8250;</button>
                 </div>
-                    <div class="testimonial-image">
-                        <img src="fast-food-banner.png" alt="Food Image">
-                    </div>
-                
+                <button class="next-btn">&#8250;</button>
+                <div class="testimonial-image">
+                    <img src="fast-food-banner.png" alt="Food Image">
+                </div>
             </div>
         </div>
-    </section> 
+    </section>
+    
+    
     <section class="subscribe">
         <div class="subscribe-content">
             <img src="burger-banner.png" alt="Burger Banner">
