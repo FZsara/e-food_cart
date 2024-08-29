@@ -3,129 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart</title>
-    <link rel="stylesheet" href="index.html">
+    <title>Your Cart</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-
-        h1 {
-            text-align: center;
-            margin-top: 20px;
-            color: black;
-            font-style: italic;
-        }
-
-        .cart-item {
+        /* Container to center content */
+        .container {
             display: flex;
             flex-direction: column;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
             padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        /* Cart Items Container */
+        #cartItems {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 300px;
+            max-width: 800px;
+        }
+
+        /* Individual Cart Item */
+        .cart-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .cart-item img {
-            width: 100%;
-            height: auto;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
             border-radius: 8px;
-            margin-bottom: 15px;
+            margin-right: 20px;
+        }
+
+        .cart-item-details {
+            flex: 1;
         }
 
         .cart-item-details h4 {
-            text-align: center;
-            margin-top: 10px;
-            color: #333;
             font-size: 18px;
+            color: #333;
+            margin-bottom: 8px;
         }
 
         .cart-item-details p {
-            text-align: center;
-            color: #555;
             font-size: 16px;
-            margin-bottom: 10px;
+            color: #555;
+            margin: 4px 0;
         }
 
         .cart-item-remove {
-            background-color: #ff4444;
-            color: white;
-            border: none;
-            padding: 8px;
-            border-radius: 5px;
-            cursor: pointer;
-            text-align: center;
-        }
-
-        .cart-item-remove:hover {
-            background-color: #cc0000;
-        }
-
-        #cartItems {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-
-        button.clear-cart {
+            padding: 8px 16px;
             background-color: #ff8800;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
-            display: block;
-            margin: 20px auto;
         }
 
-        button.clear-cart:hover {
-            background-color: #e67300;
+        .cart-item-remove:hover {
+            background-color: #e67600;
         }
 
-        @media (max-width: 768px) {
-            .cart-item {
-                padding: 15px;
-            }
-            .cart-item-details h4 {
-                font-size: 16px;
-            }
-            button.clear-cart {
-                padding: 8px 16px;
-            }
+        /* Cart Summary */
+        .cart-summary {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #222;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
         }
 
-        @media (max-width: 480px) {
-            .cart-item {
-                padding: 10px;
-                width: 100%;
-            }
-            .cart-item-details h4 {
-                font-size: 14px;
-            }
-            button.clear-cart {
-                padding: 8px 12px;
-            }
+        #totalPrice {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        /* Payment Options */
+        .payment-options {
+            margin-bottom: 20px;
+        }
+
+        .payment-options label {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .payment-options select {
+            padding: 8px 12px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        /* Buttons */
+        #checkoutBtn, #clearCartBtn {
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #ff8800;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        #checkoutBtn:hover, #clearCartBtn:hover {
+            background-color: #e67600;
         }
     </style>
 </head>
 <body>
-    <h1>
-        <img src="shopping-bag.png" style="width: 100px; vertical-align: middle; margin-right: 10px;">
-    </h1>
-    
-    <div id="cartItems"></div>
-    <button class="clear-cart" onclick="clearCart()">Clear Cart</button>
+
+    <div class="container">
+        <h1>
+            <img src="shopping-bag.png" style="width: 100px; vertical-align: middle; margin-right: 10px;">
+        </h1>
+        
+        <div id="cartItems"></div>
+        <div class="cart-summary">
+            <p id="totalPrice">Total Price: taka</p>
+            <div class="payment-options">
+                <label for="paymentMethod">Select Payment Method:</label>
+                <select id="paymentMethod">
+                    <option value="cod">Cash on Delivery</option>
+                    <option value="bkash">bKash</option>
+                </select>
+            </div>
+            <button id="checkoutBtn" onclick="checkout()">Checkout</button>
+            <button id="clearCartBtn" onclick="clearCart()">Clear Cart</button>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
             const cartItemsContainer = document.getElementById('cartItems');
+            const totalPriceElement = document.getElementById('totalPrice');
+            let totalPrice = 0;
 
             if (cartItems.length === 0) {
                 cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
@@ -133,6 +162,9 @@
                 cartItems.forEach(item => {
                     const cartItemElement = document.createElement('div');
                     cartItemElement.className = 'cart-item';
+
+                    const itemPrice = parseFloat(item.price.replace('$', ''));
+                    totalPrice += itemPrice;
 
                     cartItemElement.innerHTML = `
                         <img src="${item.image}" alt="${item.name}">
@@ -146,6 +178,8 @@
                     cartItemsContainer.appendChild(cartItemElement);
                 });
             }
+
+            totalPriceElement.textContent = `Total Price: ${totalPrice.toFixed(2)}`;
         });
 
         function removeFromCart(name) {
@@ -154,6 +188,7 @@
 
             localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
+            // Reload the page to update the cart display
             location.reload();
         }
 
@@ -161,6 +196,17 @@
             localStorage.removeItem('cartItems');
             location.reload();
         }
+
+        function checkout() {
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            if (paymentMethod === 'bkash') {
+                window.location.href = 'https://www.bkash.com/page/student-account'; // Use bKash app URL scheme
+            } else {
+                alert(`You have selected ${paymentMethod === 'cod' ? 'Cash on Delivery' : 'an unknown payment method'}.`);
+            }
+            clearCart();
+        }
     </script>
+
 </body>
 </html>
